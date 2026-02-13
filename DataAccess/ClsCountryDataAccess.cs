@@ -10,7 +10,7 @@ namespace DataAccess
         {
             DataTable dt = new();
             MySqlConnection connection = new MySqlConnection(ClsDataSccessSettings.ConnectionString());
-            string query = "select * from Countries";
+            string query = "select * from Countries order by CountryName";
             MySqlCommand command = new(query, connection);
 
             try
@@ -33,7 +33,7 @@ namespace DataAccess
             return dt;
         }
 
-        public static bool FindCountry(ref int Id, ref string name)
+        public static bool FindCountryByname(ref int Id, string name)
         {
             bool isFound = false;
             MySqlConnection connection = new(ClsDataSccessSettings.ConnectionString());
@@ -50,6 +50,37 @@ namespace DataAccess
                 {
                     isFound = true;
                     Id = (int)reader["CountryID"];
+                    name = (string)reader["CountryName"];
+                }
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return isFound;
+        }
+
+        public static bool FindCountryByID(int id, ref string name)
+        {
+            bool isFound = false;
+            MySqlConnection connection = new(ClsDataSccessSettings.ConnectionString());
+            string query = "select * from Countries where CountryID=@ID";
+            MySqlCommand command = new(query, connection);
+            command.Parameters.AddWithValue("@ID", id);
+
+            try
+            {
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    isFound = true;
                     name = (string)reader["CountryName"];
                 }
                 reader.Close();
@@ -117,11 +148,11 @@ namespace DataAccess
 
         public static int Add(string name)
         {
-            int id = 0;
+            int id = -1;
             MySqlConnection connection = new(ClsDataSccessSettings.ConnectionString());
-            string query = "insert into Countries values (@NAME ); select last_insert_id()";
+            string query = "insert into Countries (CountryName) values (@NAME ); select last_insert_id()";
             MySqlCommand command = new(query, connection);
-            command.Parameters.AddWithValue("@ID", name);
+            command.Parameters.AddWithValue("@NAME", name);
 
             try
             {
@@ -136,6 +167,30 @@ namespace DataAccess
                 connection.Close();
             }
             return id;
+        }
+
+        public static bool Update(int id, string name)
+        {
+            int RowAffected = 0;
+            MySqlConnection connection = new(ClsDataSccessSettings.ConnectionString());
+            string query = "update Countries set CountryName = @NAME where CountryID=@ID";
+            MySqlCommand command = new(query, connection);
+            command.Parameters.AddWithValue("@ID", id);
+            command.Parameters.AddWithValue("@NAME", name);
+
+            try
+            {
+                connection.Open();
+                RowAffected = command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return RowAffected > 0;
         }
 
         public static bool Delete(int id)

@@ -44,3 +44,4 @@
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/EmployeeConsoleApp/obj/Debug/net8.0/EmployeeConsoleApp.pdb
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/EmployeeConsoleApp/obj/Debug/net8.0/EmployeeConsoleApp.genruntimeconfig.cache
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/EmployeeConsoleApp/obj/Debug/net8.0/ref/EmployeeConsoleApp.dll
+/home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/EmployeeConsoleApp/obj/Debug/net8.0/EmployeeConsoleApp.sourcelink.json

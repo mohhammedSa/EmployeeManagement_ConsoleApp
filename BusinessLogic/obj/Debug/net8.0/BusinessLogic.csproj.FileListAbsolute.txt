@@ -28,3 +28,4 @@
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/BusinessLogic/obj/Debug/net8.0/refint/BusinessLogic.dll
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/BusinessLogic/obj/Debug/net8.0/BusinessLogic.pdb
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/BusinessLogic/obj/Debug/net8.0/ref/BusinessLogic.dll
+/home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/BusinessLogic/obj/Debug/net8.0/BusinessLogic.sourcelink.json

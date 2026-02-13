@@ -22,3 +22,4 @@
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/DataAccess/obj/Debug/net8.0/refint/DataAccess.dll
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/DataAccess/obj/Debug/net8.0/DataAccess.pdb
 /home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/DataAccess/obj/Debug/net8.0/ref/DataAccess.dll
+/home/hamouda/01_Desk/Programming/C#/DatabaseConnectivity/EmployeeManagmentSystem/DataAccess/obj/Debug/net8.0/DataAccess.sourcelink.json

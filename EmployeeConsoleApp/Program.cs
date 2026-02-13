@@ -91,6 +91,17 @@ internal class EmployeeManagementApp
             Console.WriteLine("Employee does not exist.");
     }
 
+    static void TestFindCoutryByID(int id)
+    {
+        ClsCountry? country = ClsCountry.FindCountryByID(id);
+        if (country != null)
+        {
+            Console.WriteLine("Country found.");
+            Console.WriteLine($"{country.CountryID}, {country.CountryName}");
+        }
+        else
+            Console.WriteLine("Country does not found.");
+    }
 
     static void TestFindCoutryByName(string name)
     {
@@ -103,17 +114,6 @@ internal class EmployeeManagementApp
         else
             Console.WriteLine("Country does not found.");
     }
-    static void TestCountriesList()
-    {
-        Console.WriteLine("-------------------");
-        Console.WriteLine("Countries list: ");
-        Console.WriteLine("-------------------");
-        foreach (DataRow country in ClsCountry.GetCountries().Rows)
-        {
-            Console.WriteLine($"{country["CountryID"]}, {country["CountryName"]}");
-            Console.WriteLine("-------------------");
-        }
-    }
     static void TestIsCountryExists(string name)
     {
         if (ClsCountry.isCountryExists(name))
@@ -121,8 +121,6 @@ internal class EmployeeManagementApp
         else
             Console.WriteLine("Country does not exist");
     }
-
-
     static void TestIsCountryExists(int id)
     {
         if (ClsCountry.isCountryExists(id))
@@ -134,14 +132,31 @@ internal class EmployeeManagementApp
     {
         ClsCountry country = new ClsCountry
         {
-            CountryName = "Hello"
+            CountryName = name
         };
 
-        // country.Save();
+        if (country.Save())
+            Console.WriteLine("Country added successfully.");
+        else
+            Console.WriteLine("Country added failed.");
     }
 
-    static void testUpdateCountry(int ID)
-    { }
+    static void testUpdateCountry(int id, string name)
+    {
+        ClsCountry? country = ClsCountry.FindCountryByID(id);
+        if (country != null)
+        {
+            country.CountryName = name;
+
+            if (country.Save())
+                Console.WriteLine("Country updated successfully.");
+            else
+                Console.WriteLine("Country updated failed.");
+        }
+        else
+            Console.WriteLine("Country does not found.");
+
+    }
 
     static void testDeleteCountry(int ID)
     {
@@ -152,6 +167,18 @@ internal class EmployeeManagementApp
             else Console.WriteLine("Country Deleted Failed.");
 
         else Console.WriteLine("Country does not found.");
+    }
+
+    static void TestCountriesList()
+    {
+        Console.WriteLine("-------------------");
+        Console.WriteLine("Countries list: ");
+        Console.WriteLine("-------------------");
+        foreach (DataRow country in ClsCountry.GetCountries().Rows)
+        {
+            Console.WriteLine($"{country["CountryID"]}, {country["CountryName"]}");
+            Console.WriteLine("-------------------");
+        }
     }
     static void Main()
     {
@@ -168,8 +195,12 @@ internal class EmployeeManagementApp
         TestIsCountryExists("ghh");
         TestFindCoutryByName("Morocco");
         TestFindCoutryByName("ghh"); */
-        TestIsCountryExists(5);
-        testDeleteCountry(5);
-        TestIsCountryExists(5);
+        // TestIsCountryExists(5);
+        // testDeleteCountry(5);
+        // TestIsCountryExists(5);
+        // testAddNewCountry("Qatar");
+        // TestCountriesList();
+        // testUpdateCountry(13, "Colombia");
+        TestCountriesList();
     }
 }
