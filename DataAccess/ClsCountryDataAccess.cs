@@ -33,7 +33,7 @@ namespace DataAccess
             return dt;
         }
 
-        public static bool FindCountryByname(ref int Id, string name)
+        public static bool FindCountryByname(ref int Id, string name, ref string? countryCode, ref string? countruPhoneCode)
         {
             bool isFound = false;
             MySqlConnection connection = new(ClsDataSccessSettings.ConnectionString());
@@ -51,12 +51,14 @@ namespace DataAccess
                     isFound = true;
                     Id = (int)reader["CountryID"];
                     name = (string)reader["CountryName"];
+                    countryCode = reader["Code"] == DBNull.Value ? null : (string)reader["Code"];
+                    countruPhoneCode = reader["PhoneCode"] == DBNull.Value ? null : (string)reader["PhoneCode"];
                 }
                 reader.Close();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Find by name: " + e.Message);
             }
             finally
             {
@@ -65,7 +67,7 @@ namespace DataAccess
             return isFound;
         }
 
-        public static bool FindCountryByID(int id, ref string name)
+        public static bool FindCountryByID(int id, ref string name, ref string? countryCode, ref string? countruPhoneCode)
         {
             bool isFound = false;
             MySqlConnection connection = new(ClsDataSccessSettings.ConnectionString());
@@ -82,12 +84,14 @@ namespace DataAccess
                 {
                     isFound = true;
                     name = (string)reader["CountryName"];
+                    countryCode = reader["Code"] == DBNull.Value ? null : (string)reader["Code"];
+                    countruPhoneCode = reader["PhoneCode"] == DBNull.Value ? null : (string)reader["PhoneCode"];
                 }
                 reader.Close();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Find by id" + e.Message);
             }
             finally
             {
@@ -146,13 +150,15 @@ namespace DataAccess
             return isExist;
         }
 
-        public static int Add(string name)
+        public static int Add(string name, string? code, string? phoneCode)
         {
             int id = -1;
             MySqlConnection connection = new(ClsDataSccessSettings.ConnectionString());
-            string query = "insert into Countries (CountryName) values (@NAME ); select last_insert_id()";
+            string query = "insert into Countries (CountryName,Code,PhoneCode) values (@NAME, @Code, @PhoneCode ); select last_insert_id()";
             MySqlCommand command = new(query, connection);
             command.Parameters.AddWithValue("@NAME", name);
+            command.Parameters.AddWithValue("@Code", code);
+            command.Parameters.AddWithValue("@PhoneCode", phoneCode);
 
             try
             {
@@ -169,14 +175,16 @@ namespace DataAccess
             return id;
         }
 
-        public static bool Update(int id, string name)
+        public static bool Update(int id, string name, string? code, string? phoneCode)
         {
             int RowAffected = 0;
             MySqlConnection connection = new(ClsDataSccessSettings.ConnectionString());
-            string query = "update Countries set CountryName = @NAME where CountryID=@ID";
+            string query = "update Countries set CountryName = @NAME , Code = @Code, PhoneCode=@PhoneCode where CountryID=@ID";
             MySqlCommand command = new(query, connection);
             command.Parameters.AddWithValue("@ID", id);
             command.Parameters.AddWithValue("@NAME", name);
+            command.Parameters.AddWithValue("@Code", code);
+            command.Parameters.AddWithValue("@PhoneCode", phoneCode);
 
             try
             {

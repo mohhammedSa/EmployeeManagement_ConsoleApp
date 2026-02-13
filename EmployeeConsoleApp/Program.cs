@@ -97,7 +97,7 @@ internal class EmployeeManagementApp
         if (country != null)
         {
             Console.WriteLine("Country found.");
-            Console.WriteLine($"{country.CountryID}, {country.CountryName}");
+            Console.WriteLine($"{country.CountryID}, {country.CountryName}, {country.CountryCode ?? "null"}, {country.CountryPhoneCode ?? "null"}");
         }
         else
             Console.WriteLine("Country does not found.");
@@ -109,7 +109,7 @@ internal class EmployeeManagementApp
         if (country != null)
         {
             Console.WriteLine("Country found.");
-            Console.WriteLine($"{country.CountryID}, {country.CountryName}");
+            Console.WriteLine($"{country.CountryID}, {country.CountryName}, {country.CountryCode ?? "null"}, {country.CountryPhoneCode ?? "null"}");
         }
         else
             Console.WriteLine("Country does not found.");
@@ -128,11 +128,13 @@ internal class EmployeeManagementApp
         else
             Console.WriteLine("Country does not exist");
     }
-    static void testAddNewCountry(string name)
+    static void testAddNewCountry(string name, string Code, string PhoneCode)
     {
         ClsCountry country = new ClsCountry
         {
-            CountryName = name
+            CountryName = name,
+            CountryCode = Code,
+            CountryPhoneCode = PhoneCode
         };
 
         if (country.Save())
@@ -176,7 +178,7 @@ internal class EmployeeManagementApp
         Console.WriteLine("-------------------");
         foreach (DataRow country in ClsCountry.GetCountries().Rows)
         {
-            Console.WriteLine($"{country["CountryID"]}, {country["CountryName"]}");
+            Console.WriteLine($"{country["CountryID"]}, {country["CountryName"]} , {country.Field<string?>("Code")?.ToString() ?? "null"}, {country.Field<string?>("PhoneCode")?.ToString() ?? "null"}");
             Console.WriteLine("-------------------");
         }
     }
@@ -190,17 +192,21 @@ internal class EmployeeManagementApp
         // TestDeleteEmployee(19);
         // TestListEmployees();
         // TestIsEmployeeExixts(100);
+
+
         // TestCountriesList();
-        /* TestIsCountryExists("Morocco");
-        TestIsCountryExists("ghh");
-        TestFindCoutryByName("Morocco");
-        TestFindCoutryByName("ghh"); */
+        // TestIsCountryExists("Morocco");
+        // TestIsCountryExists("ghh");
+        // TestFindCoutryByName("Morocco");
+        // Console.WriteLine("-------------------------------");
+        // TestFindCoutryByName("ghh");
         // TestIsCountryExists(5);
         // testDeleteCountry(5);
         // TestIsCountryExists(5);
         // testAddNewCountry("Qatar");
         // TestCountriesList();
-        // testUpdateCountry(13, "Colombia");
+        testAddNewCountry("Egypt", "122", "122");
+        Console.WriteLine("-------------------------------");
         TestCountriesList();
     }
 }

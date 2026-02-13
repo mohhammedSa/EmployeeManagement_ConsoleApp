@@ -9,6 +9,9 @@ namespace EmployeeBusiness
         public int CountryID { get; set; }
         public string CountryName { get; set; }
 
+        public string? CountryCode { get; set; }
+        public string? CountryPhoneCode { get; set; }
+
         public enum enMode
         {
             enAddMode,
@@ -20,13 +23,17 @@ namespace EmployeeBusiness
         {
             CountryID = -1;
             CountryName = "";
+            CountryCode = "";
+            CountryPhoneCode = "";
             mode = enMode.enAddMode;
         }
 
-        private ClsCountry(int id, string name)
+        private ClsCountry(int id, string name, string? code, string? phoneCode)
         {
             CountryID = id;
             CountryName = name;
+            CountryCode = code;
+            CountryPhoneCode = phoneCode;
             mode = enMode.enUpdateMode;
         }
 
@@ -38,8 +45,10 @@ namespace EmployeeBusiness
         public static ClsCountry? FindCountryByID(int id)
         {
             string name = "";
-            if (ClsCountryDataAccess.FindCountryByID(id, ref name))
-                return new ClsCountry(id, name);
+            string? countryCode = "";
+            string? countruPhoneCode = "";
+            if (ClsCountryDataAccess.FindCountryByID(id, ref name, ref countryCode, ref countruPhoneCode))
+                return new ClsCountry(id, name, countryCode, countruPhoneCode);
             else
                 return null;
         }
@@ -47,8 +56,10 @@ namespace EmployeeBusiness
         public static ClsCountry? FindCountry(string name)
         {
             int id = -1;
-            if (ClsCountryDataAccess.FindCountryByname(ref id, name))
-                return new ClsCountry(id, name);
+            string? countryCode = "";
+            string? countryPhoneCode = "";
+            if (ClsCountryDataAccess.FindCountryByname(ref id, name, ref countryCode, ref countryPhoneCode))
+                return new ClsCountry(id, name, countryCode, countryPhoneCode);
             else
                 return null;
         }
@@ -70,13 +81,13 @@ namespace EmployeeBusiness
 
         private bool _AddCountry()
         {
-            this.CountryID = ClsCountryDataAccess.Add(CountryName);
+            this.CountryID = ClsCountryDataAccess.Add(CountryName, CountryCode, CountryPhoneCode);
             return CountryID != -1;
         }
 
         private bool _UpdateCountry()
         {
-            return ClsCountryDataAccess.Update(CountryID, CountryName);
+            return ClsCountryDataAccess.Update(CountryID, CountryName, CountryCode, CountryPhoneCode);
         }
 
         public bool Save()
